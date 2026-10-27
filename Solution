@@ -1,0 +1,45 @@
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        int j = 0;
+        while(j < n) {
+            if (nums[j] <= 0 || nums[j] > n || (nums[j] == nums[nums[j] - 1])) {
+                j++;
+                continue;
+            }
+
+            int index = nums[j] - 1;
+            int temp = nums[index]; 
+            nums[index] = nums[j]; 
+            nums[j] = temp; 
+        }
+        
+        int count = 1;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        
+        return n + 1;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+
+        // Test Case 1
+        int[] nums1 = {1, 2, 0};
+        System.out.println("Input: [1, 2, 0] -> Output: " + sol.firstMissingPositive(nums1)); 
+        // Expected: 3
+
+        // Test Case 2
+        int[] nums2 = {3, 4, -1, 1};
+        System.out.println("Input: [3, 4, -1, 1] -> Output: " + sol.firstMissingPositive(nums2)); 
+        // Expected: 2
+
+        // Test Case 3
+        int[] nums3 = {7, 8, 9, 11, 12};
+        System.out.println("Input: [7, 8, 9, 11, 12] -> Output: " + sol.firstMissingPositive(nums3)); 
+        // Expected: 1
+    }
+}
